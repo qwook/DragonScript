@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title></title>
+</head>
+<body>
+
+<style type="text/css">
+	html, body, pre {
+		height: 100%;
+		margin: 0;
+	}
+	pre {
+		width: 49%;
+		display: inline-block;
+	}
+
+	#compiled {
+		overflow: scroll;
+	}
+
+	#compile {
+		position: absolute;
+		bottom: 5px;
+		left: 5px;
+		z-index: 1000;
+		background: white;
+		font-weight: bold;
+		font-size: 20px;
+		font-family: sans-serif;
+		text-decoration: none;
+		color: black;
+		padding: 5px;
+	}
+</style>
+
+<pre id="editor">DSPK V04.00 Furcadia
+
+// Create helper functions
+function animate(array) {
+    // Dragonspeak easily mixes in with javascript.
+    for (var i = array.length-1; i > 0; i--) {
+        (5:5) change object type `array[i-1]` to type `array[i]`.
+    }
+}
+
+(0:100) When 1 seconds have passed, offset by 0,
+    animate([1,2,3,4,5]);
+    animate([6,7,8,9,10]);
+    
+    
+// You can reference javascript objects easily
+var randomObject = 1000;
+(0:19) When somebody uses object type `randomObject`,
+    (3:5) where the triggering furre was at,
+        (5:4) place object type `randomObject + 1`.
+
+// Loop code several times
+for (var i = 0; i < 10; i ++) {
+    (0:100) When 1 seconds have passed, offset by 0,
+        (1:30) and the floor at (%object_`i`) is the same as the floor at (2,9),
+        (5:302) take variable %inventory_`i` and add 1 to it.
+}
+
+*Endtriggers* 8888 *Endtriggers*
+</pre>
+
+<pre id="compiled">
+</pre>
+
+<a href="#" id="compile">Compile</a>
+
+<script type="text/javascript" src="ace/ace.js"></script>
+<script type="text/javascript" src="ace/mode-javascript.js"></script>
+<script type="text/javascript" src="index.js"></script>
+
+<script>
+    var editor = ace.edit("editor");
+    editor.setTheme("ace/theme/twilight");
+    editor.session.setMode("ace/mode/javascript");
+
+    function cmp() {
+		var text;
+
+		try {
+			text = compile(editor.getValue());
+		} catch(e) {
+			text = e.toString()
+		}
+
+		document.getElementById("compiled").innerText = text;
+	}
+	cmp();
+
+    document.getElementById("compile").addEventListener("click", function(e) {
+    	e.preventDefault();
+
+		cmp();
+    })
+</script>
+
+</body>
+</html>
